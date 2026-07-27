@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>陳亞生 Ya-Sheng Chen · Python Data Engineer</title>
+<meta name="description" content="具 6+ 年 Python 資料工程與自動化開發經驗，專注於資料蒐集、ETL Pipeline、爬蟲系統與資料處理流程建置。">
+<meta name="theme-color" content="#F6F5F0" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#12131E" media="(prefers-color-scheme: dark)">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F6F5F0;
+    --surface:#FFFFFF;
+    --ink:#181A2E;
+    --body-ink:#2b2d42;
+    --muted:#585B70;
+    --line:#E4E2D8;
+    --line-strong:#CFCCBF;
+    --accent:#116460;
+    --accent-soft:#DCE8E6;
+    --shadow:0 1px 2px rgba(24,26,46,.04), 0 8px 28px rgba(24,26,46,.05);
+    --shadow-hover:0 2px 4px rgba(24,26,46,.05), 0 14px 36px rgba(24,26,46,.09);
+
+    --display:"Space Grotesk","Noto Sans TC",system-ui,sans-serif;
+    --body:"Inter","Noto Sans TC",system-ui,sans-serif;
+    --mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+  }
+
+  html[data-theme="dark"]{
+    --paper:#12131E;
+    --surface:#1B1C29;
+    --ink:#ECEBE3;
+    --body-ink:#C7C8D6;
+    --muted:#8E90A6;
+    --line:#282A3A;
+    --line-strong:#3A3C50;
+    --accent:#3ED0BE;
+    --accent-soft:rgba(62,208,190,.13);
+    --shadow:0 1px 2px rgba(0,0,0,.3), 0 8px 28px rgba(0,0,0,.35);
+    --shadow-hover:0 2px 4px rgba(0,0,0,.3), 0 14px 36px rgba(0,0,0,.5);
+  }
+
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:var(--body);
+    background:var(--paper);
+    color:var(--ink);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+    text-rendering:optimizeLegibility;
+    transition:background-color .35s ease, color .35s ease;
+  }
+  a{color:inherit}
+  ::selection{background:var(--accent);color:var(--paper)}
+
+  .wrap{
+    max-width:860px;
+    margin:0 auto;
+    padding:clamp(28px,6vw,72px) clamp(20px,5vw,56px) 64px;
+  }
+
+  /* ---------- theme toggle ---------- */
+  .theme-toggle{
+    position:fixed;
+    top:18px;right:18px;
+    z-index:20;
+    width:42px;height:42px;
+    display:grid;place-items:center;
+    border-radius:11px;
+    border:1px solid var(--line-strong);
+    background:var(--surface);
+    color:var(--ink);
+    cursor:pointer;
+    box-shadow:var(--shadow);
+    transition:background-color .3s ease, border-color .3s ease, transform .18s ease;
+  }
+  .theme-toggle:hover{transform:translateY(-1px)}
+  .theme-toggle:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+  .theme-toggle svg{width:19px;height:19px}
+  .theme-toggle .moon{display:block}
+  .theme-toggle .sun{display:none}
+  html[data-theme="dark"] .theme-toggle .moon{display:none}
+  html[data-theme="dark"] .theme-toggle .sun{display:block}
+
+  /* ---------- eyebrow / section labels ---------- */
+  .eyebrow{
+    font-family:var(--mono);
+    font-size:12px;
+    letter-spacing:.08em;
+    color:var(--accent);
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin-bottom:20px;
+  }
+  .eyebrow::before{content:"//";opacity:.55}
+  .eyebrow::after{
+    content:"";
+    flex:1;
+    height:1px;
+    background:var(--line-strong);
+  }
+
+  /* ---------- header ---------- */
+  header{
+    border-bottom:1px solid var(--line-strong);
+    padding-bottom:34px;
+    margin-bottom:44px;
+  }
+  .tag-line{
+    font-family:var(--mono);
+    font-size:12.5px;
+    color:var(--muted);
+    letter-spacing:.02em;
+    margin-bottom:22px;
+    display:flex;
+    align-items:center;
+    gap:8px;
+  }
+  .dot{
+    width:7px;height:7px;border-radius:50%;
+    background:var(--accent);
+    box-shadow:0 0 0 4px var(--accent-soft);
+    flex:none;
+  }
+  h1{
+    font-family:var(--display);
+    font-weight:700;
+    font-size:clamp(38px,8vw,62px);
+    line-height:1.02;
+    letter-spacing:-.02em;
+    margin-bottom:6px;
+  }
+  h1 .en{
+    display:block;
+    font-size:clamp(15px,3vw,20px);
+    font-weight:500;
+    letter-spacing:.04em;
+    color:var(--muted);
+    margin-top:10px;
+  }
+  .role{
+    font-family:var(--mono);
+    font-size:14px;
+    font-weight:500;
+    color:var(--accent);
+    margin-top:20px;
+    display:inline-flex;
+    align-items:center;
+    gap:9px;
+    background:var(--accent-soft);
+    padding:6px 13px;
+    border-radius:100px;
+  }
+  .meta-row{
+    margin-top:24px;
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px 22px;
+    font-family:var(--mono);
+    font-size:13px;
+  }
+  .meta-row a,.meta-row span{
+    display:inline-flex;
+    align-items:center;
+    gap:7px;
+    color:var(--muted);
+    text-decoration:none;
+    transition:color .18s ease;
+  }
+  .meta-row a:hover{color:var(--accent)}
+  .meta-row a:focus-visible{
+    outline:2px solid var(--accent);
+    outline-offset:3px;
+    border-radius:3px;
+  }
+  .meta-row svg{width:15px;height:15px;flex:none}
+
+  /* ---------- generic section ---------- */
+  section{margin-bottom:52px}
+  .about p{
+    font-size:clamp(15px,2.4vw,17px);
+    max-width:64ch;
+    color:var(--body-ink);
+  }
+  .about p + p{margin-top:14px}
+
+  /* ---------- skills ---------- */
+  .skills-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+    gap:1px;
+    background:var(--line);
+    border:1px solid var(--line);
+    border-radius:12px;
+    overflow:hidden;
+  }
+  .skill-cell{
+    background:var(--surface);
+    padding:20px 22px;
+    transition:background-color .3s ease;
+  }
+  .skill-cell h3{
+    font-family:var(--mono);
+    font-size:11.5px;
+    font-weight:600;
+    letter-spacing:.06em;
+    text-transform:uppercase;
+    color:var(--accent);
+    margin-bottom:13px;
+  }
+  .tags{display:flex;flex-wrap:wrap;gap:7px}
+  .tag{
+    font-family:var(--mono);
+    font-size:12.5px;
+    color:var(--ink);
+    background:var(--paper);
+    border:1px solid var(--line-strong);
+    padding:4px 10px;
+    border-radius:6px;
+    line-height:1.4;
+    transition:background-color .3s ease, border-color .3s ease;
+  }
+
+  /* ---------- experience timeline ---------- */
+  .timeline{
+    position:relative;
+    padding-left:30px;
+  }
+  .timeline::before{
+    content:"";
+    position:absolute;
+    left:5px;top:6px;bottom:6px;
+    width:2px;
+    background:var(--line-strong);
+  }
+  .job{position:relative;padding-bottom:40px}
+  .job:last-child{padding-bottom:0}
+  .job::before{
+    content:"";
+    position:absolute;
+    left:-30px;top:5px;
+    width:12px;height:12px;
+    border-radius:50%;
+    background:var(--surface);
+    border:2.5px solid var(--accent);
+  }
+  .job.current::before{background:var(--accent)}
+  .job.current::after{
+    content:"";
+    position:absolute;
+    left:-30px;top:5px;
+    width:12px;height:12px;
+    border-radius:50%;
+    border:2.5px solid var(--accent);
+    animation:pulse 2.2s ease-out infinite;
+  }
+  @keyframes pulse{
+    0%{transform:scale(1);opacity:.7}
+    100%{transform:scale(2.4);opacity:0}
+  }
+  .job-head{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:space-between;
+    align-items:baseline;
+    gap:6px 18px;
+    margin-bottom:4px;
+  }
+  .job h3{
+    font-family:var(--display);
+    font-size:19px;
+    font-weight:600;
+    letter-spacing:-.01em;
+  }
+  .job .when{
+    font-family:var(--mono);
+    font-size:12.5px;
+    color:var(--muted);
+    white-space:nowrap;
+  }
+  .badge-now{
+    color:var(--accent);
+    font-weight:600;
+  }
+  .job .company{
+    font-family:var(--mono);
+    font-size:13px;
+    color:var(--accent);
+    margin-bottom:14px;
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+  }
+  .job ul{list-style:none;display:grid;gap:8px;margin-bottom:16px}
+  .job li{
+    position:relative;
+    padding-left:20px;
+    font-size:14.5px;
+    color:var(--body-ink);
+  }
+  .job li::before{
+    content:"▸";
+    position:absolute;left:0;top:0;
+    color:var(--accent);
+    font-size:12px;
+  }
+  .subgroup{margin-bottom:15px}
+  .subgroup:last-of-type{margin-bottom:0}
+  .subgroup-label{
+    font-family:var(--mono);
+    font-size:11px;
+    font-weight:600;
+    letter-spacing:.04em;
+    text-transform:uppercase;
+    color:var(--muted);
+    margin-bottom:9px;
+    display:flex;align-items:center;gap:8px;
+  }
+  .subgroup-label::before{content:"\203A";color:var(--accent);font-size:15px;line-height:1}
+  .job .subgroup ul{margin-bottom:0}
+  .lead{
+    font-size:14.5px;
+    color:var(--body-ink);
+    margin-bottom:16px;
+  }
+  .stat{
+    display:inline-flex;
+    align-items:baseline;
+    gap:9px;
+    background:var(--accent-soft);
+    border-radius:8px;
+    padding:10px 15px;
+    margin:2px 0 16px;
+  }
+  .stat .num{
+    font-family:var(--display);
+    font-weight:700;
+    font-size:24px;
+    color:var(--accent);
+    letter-spacing:-.01em;
+  }
+  .stat .label{font-size:13px;color:var(--body-ink)}
+  .stack{
+    font-family:var(--mono);
+    font-size:12px;
+    color:var(--muted);
+    letter-spacing:.02em;
+    border-top:1px dashed var(--line-strong);
+    padding-top:12px;
+  }
+  .stack b{color:var(--ink);font-weight:600}
+
+  /* ---------- project ---------- */
+  .project-list{display:grid;gap:12px}
+  .project{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:12px;
+    padding:20px 22px;
+    box-shadow:var(--shadow);
+    transition:transform .2s ease, box-shadow .2s ease, background-color .3s ease, border-color .3s ease;
+    display:block;
+    text-decoration:none;
+  }
+  .project:hover{transform:translateY(-2px);box-shadow:var(--shadow-hover)}
+  .project:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+  .project-head{display:flex;align-items:center;gap:9px;margin-bottom:7px}
+  .project h3{font-family:var(--mono);font-size:15.5px;font-weight:600}
+  .project .arrow{color:var(--accent);transition:transform .2s ease;flex:none}
+  .project:hover .arrow{transform:translate(3px,-3px)}
+  .project p{font-size:14px;color:var(--muted);line-height:1.55}
+  .project code{
+    font-family:var(--mono);
+    font-size:12.5px;
+    background:var(--paper);
+    border:1px solid var(--line-strong);
+    border-radius:5px;
+    padding:1px 6px;
+    color:var(--ink);
+  }
+
+  /* ---------- education ---------- */
+  .edu-item{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:space-between;
+    gap:4px 18px;
+    padding:16px 0;
+    border-bottom:1px solid var(--line);
+  }
+  .edu-item:last-child{border-bottom:none}
+  .edu-item h3{font-family:var(--display);font-size:16px;font-weight:600}
+  .edu-item .sub{font-size:13.5px;color:var(--muted);margin-top:2px}
+  .edu-item .when{font-family:var(--mono);font-size:12.5px;color:var(--muted);white-space:nowrap}
+
+  /* ---------- footer ---------- */
+  footer{
+    border-top:1px solid var(--line-strong);
+    padding-top:22px;
+    font-family:var(--mono);
+    font-size:12px;
+    color:var(--muted);
+    display:flex;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    gap:8px;
+  }
+
+  /* ---------- reveal animation ---------- */
+  .reveal{opacity:0;transform:translateY(14px);transition:opacity .6s ease,transform .6s ease}
+  .reveal.in{opacity:1;transform:none}
+
+  @media (prefers-reduced-motion:reduce){
+    html{scroll-behavior:auto}
+    .reveal{opacity:1;transform:none;transition:none}
+    .job.current::after{animation:none;display:none}
+    *{transition:none!important}
+  }
+
+  /* ---------- print → clean PDF ---------- */
+  @media print{
+    :root{--paper:#fff;--surface:#fff;--ink:#000;--body-ink:#222}
+    html[data-theme="dark"]{--paper:#fff;--surface:#fff;--ink:#000;--body-ink:#222;--muted:#444;--line:#ddd;--line-strong:#bbb;--accent:#0b4b48}
+    body{font-size:11px}
+    .wrap{max-width:none;padding:0}
+    .reveal{opacity:1;transform:none}
+    .theme-toggle{display:none}
+    section{margin-bottom:20px;break-inside:avoid}
+    .job{break-inside:avoid;padding-bottom:16px}
+    .job.current::after{display:none}
+    a{text-decoration:none}
+    header{margin-bottom:22px;padding-bottom:18px}
+    h1{font-size:34px}
+    footer{display:none}
+    .skills-grid{box-shadow:none}
+  }
+</style>
+</head>
+<body>
+
+<button class="theme-toggle" id="themeToggle" aria-label="切換深色模式" title="切換深色 / 淺色模式">
+  <svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+  <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+</button>
+
+<main class="wrap">
+
+  <!-- ============ HEADER ============ -->
+  <header class="reveal">
+    <div class="tag-line"><span class="dot"></span>AI 大數據時代，掌握資料即掌握市場</div>
+    <h1>陳亞生<span class="en">Ya-Sheng Chen</span></h1>
+    <div class="role">Python Data Engineer</div>
+    <nav class="meta-row" aria-label="聯絡方式">
+      <span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        Taipei City, Taiwan
+      </span>
+      <a href="https://github.com/YashengChen" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5A11.5 11.5 0 00.5 12a11.5 11.5 0 007.86 10.92c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.54-3.88-1.54-.53-1.34-1.3-1.7-1.3-1.7-1.06-.72.08-.71.08-.71 1.17.08 1.79 1.2 1.79 1.2 1.04 1.79 2.73 1.27 3.4.97.1-.76.41-1.27.74-1.56-2.55-.29-5.24-1.28-5.24-5.68 0-1.25.45-2.28 1.19-3.08-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.18a11 11 0 015.8 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.8 1.19 1.83 1.19 3.08 0 4.41-2.69 5.38-5.25 5.67.42.36.8 1.08.8 2.18v3.23c0 .31.21.67.8.56A11.5 11.5 0 0023.5 12 11.5 11.5 0 0012 .5z"/></svg>
+        github.com/YashengChen
+      </a>
+      <a href="https://www.linkedin.com/in/yasheng-chen-b5ab05184" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.36V9h3.41v1.56h.05c.47-.9 1.63-1.85 3.36-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.06 2.06 0 110-4.12 2.06 2.06 0 010 4.12zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.72V1.72C24 .77 23.2 0 22.22 0z"/></svg>
+        LinkedIn
+      </a>
+      <a href="https://hackmd.io/@Arsheng" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>
+        HackMD
+      </a>
+      <a href="mailto:arshengc@gmail.com">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/></svg>
+        Email
+      </a>
+    </nav>
+  </header>
+
+  <!-- ============ ABOUT ============ -->
+  <section class="about reveal">
+    <div class="eyebrow">about</div>
+    <p>具 6+ 年 Python 資料工程與自動化開發經驗，專注於資料蒐集、ETL Pipeline、爬蟲系統與資料處理流程建置。</p>
+    <p>曾參與社群媒體、新聞、金融與政府公開資料之自動化資料流程開發，熟悉 Airflow、Scrapy、Docker 與 Linux 環境，具備大型資料蒐集與長期維運經驗。擅長快速分析資料來源、建立自動化處理流程，並協助團隊建構穩定可持續運作之資料基礎架構。</p>
+  </section>
+
+  <!-- ============ SKILLS ============ -->
+  <section class="reveal">
+    <div class="eyebrow">skills</div>
+    <div class="skills-grid">
+      <div class="skill-cell">
+        <h3>Programming</h3>
+        <div class="tags"><span class="tag">Python</span><span class="tag">Linux</span><span class="tag">Docker</span><span class="tag">Git</span></div>
+      </div>
+      <div class="skill-cell">
+        <h3>Database</h3>
+        <div class="tags"><span class="tag">MySQL</span><span class="tag">MSSQL</span><span class="tag">MongoDB</span></div>
+      </div>
+      <div class="skill-cell">
+        <h3>Cloud</h3>
+        <div class="tags"><span class="tag">GCP</span><span class="tag">BigQuery</span><span class="tag">Cloud Storage</span></div>
+      </div>
+      <div class="skill-cell">
+        <h3>Data Engineering</h3>
+        <div class="tags"><span class="tag">ETL Pipeline</span><span class="tag">Data Cleaning</span><span class="tag">Schema Mapping</span><span class="tag">Data Normalization</span><span class="tag">Workflow Automation</span></div>
+      </div>
+      <div class="skill-cell">
+        <h3>Crawling / Automation</h3>
+        <div class="tags"><span class="tag">Scrapy</span><span class="tag">Selenium</span><span class="tag">Playwright</span><span class="tag">cloudscraper</span><span class="tag">curl_cffi</span><span class="tag">JS Reverse Engineering</span><span class="tag">API Extraction</span></div>
+      </div>
+      <div class="skill-cell">
+        <h3>Workflow / Infra</h3>
+        <div class="tags"><span class="tag">Apache Airflow</span><span class="tag">Task Schedule</span><span class="tag">Data Pipeline</span></div>
+      </div>
+      <div class="skill-cell">
+        <h3>AI</h3>
+        <div class="tags"><span class="tag">Copilot</span><span class="tag">Gemini</span><span class="tag">Claude</span><span class="tag">OpenAI</span><span class="tag">Prompt Workflow</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ EXPERIENCE ============ -->
+  <section class="reveal">
+    <div class="eyebrow">experience</div>
+    <div class="timeline">
+
+      <article class="job current">
+        <div class="job-head">
+          <h3>爬蟲工程師 · Python Engineer</h3>
+          <span class="when"><span class="badge-now">2025.05 – Present</span></span>
+        </div>
+        <div class="company">緯致科技 WITS</div>
+        <p class="lead">獨立負責自動化數據蒐集管線的開發、單元測試與維運，整合金融市場公告、企業法遵風險、不動產鑑價與宏觀經濟等另類數據 (Alternative Data)，優化資料處理流程的產出效率與穩定度，為金融數據分析團隊提供低延遲的決策資料來源。</p>
+
+        <div class="subgroup">
+          <div class="subgroup-label">Anti-bot &amp; Reverse Engineering</div>
+          <ul>
+            <li>建立 requests → cloudscraper → curl_cffi 的分層請求策略，依防護強度逐級升級，兼顧蒐集效能與資源成本。</li>
+            <li>實價登錄：payload 與 response 皆經加密，透過 JavaScript 逆向工程解出金鑰、重現加解密函式還原資料。</li>
+            <li>findbiz、TWNIC IPv4：對方反爬機制升級為 Cloudflare（findbiz 原為 reCAPTCHA v3）後，改用 curl_cffi 進行 TLS/JA3 指紋模擬通過驗證。</li>
+            <li>MOPS 公開資訊觀測站：改用 curl_cffi 優化請求特徵，將 response 時間由 10+ 秒縮短至 1 秒內。</li>
+          </ul>
+        </div>
+
+        <div class="subgroup">
+          <div class="subgroup-label">異質資料整合與清洗 · ETL</div>
+          <ul>
+            <li>Schema Mapping：針對 API 回傳欄位無規則或縮寫的問題，建立動態欄位映射字典，對齊前端名稱與資料庫結構。</li>
+            <li>唯一性設計：以 data_id、category_id、company_id、year 等多欄位組成複合鍵，經 SHA-256 雜湊產生唯一識別碼，並於資料庫建立唯一索引擋重，避免重複資料入庫。</li>
+            <li>資料正規化：開發 Regex 模組，統一將多資料源混用的民國年 / 西元年轉換為 ISO 8601 標準格式。</li>
+          </ul>
+        </div>
+
+        <div class="subgroup">
+          <div class="subgroup-label">Alternative Data 管線</div>
+          <p class="lead" style="margin-bottom:9px">獨立開發並維護涵蓋 <b>50+ 個政府與市場資料來源、60+ 條獨立資料流 (data pipeline)</b> 的另類數據蒐集系統，各資料流具獨立 schema 與清洗邏輯：</p>
+          <ul>
+            <li><b>企業營運與風險</b>：商工登記、判決書資料庫、政府採購拒絕往來名單、進出口廠商登記、動產擔保交易、產業獎項與科學園區廠商名錄、104 公司與職缺資訊、村里界圖（結合實價登錄評估廠址地段價值）。</li>
+            <li><b>資本市場與 ESG</b>：證交所與公開資訊觀測站（財報、月營收、董監持股、四類債券、重訊、法說會影音、股東會電子資料、ESG 報告）。</li>
+            <li><b>不動產與總體經濟</b>：內政部實價登錄、全國稅籍資料、主計總處薪情平台。</li>
+            <li><b>智財與數位足跡</b>：TIPO 專利檢索 API、GeoLite IP、TWNIC IPv4 核發資訊、台灣公司情報網。</li>
+          </ul>
+        </div>
+
+        <div class="stack"><b>Stack</b> · Python / requests / cloudscraper / curl_cffi / BigQuery / Google Cloud Storage / SHA-256 / Regex / Claude</div>
+      </article>
+
+      <article class="job">
+        <div class="job-head">
+          <h3>爬蟲工程師 · Python Engineer</h3>
+          <span class="when">2022.04 – 2025.05 · 3 yr 1 mo</span>
+        </div>
+        <div class="company">坤侑科技股份有限公司</div>
+        <ul>
+          <li>負責各類資料蒐集、ETL Pipeline 與資料處理流程開發，支援社群媒體、新聞、金融與公開資料等多個商業專案之資料需求。</li>
+          <li>建立與維護多個自動化資料蒐集流程，並以 Airflow 建置資料 Pipeline 與排程流程。</li>
+          <li>透過 GUI Workflow 降低資料流程維護門檻，協助後端團隊快速整合外部資料來源。</li>
+          <li>參與輿情分析、情報蒐集與資料處理相關專案，建立資料清洗與轉換流程，提高資料可用性與穩定性。</li>
+        </ul>
+        <div class="stack"><b>Stack</b> · Python / Airflow / Scrapy / Selenium / Docker / MySQL / MongoDB</div>
+      </article>
+
+      <article class="job">
+        <div class="job-head">
+          <h3>研發工程師 · Research &amp; Develop</h3>
+          <span class="when">2019.10 – 2022.04 · 2 yr 6 mo</span>
+        </div>
+        <div class="company">Atrustek 艾信科技股份有限公司</div>
+        <ul>
+          <li>負責資料蒐集、自動化流程、資料處理與 API 資料整合，參與 SaaS 平台與金融資料產品開發。</li>
+          <li>參與 SaaS 平台 0 → 1 資料流程建置，與 CEO、業務及演算法工程師共同討論產品需求。</li>
+          <li>開發金融行情與公司財報相關資料流程，協助建立會員篩選與策略資料系統。</li>
+          <li>獨立開發中國電子發票自動登錄工具。</li>
+        </ul>
+        <div class="stat">
+          <span class="num">384 hrs</span>
+          <span class="label">每年減少的人工行政作業時間</span>
+        </div>
+        <div class="stack"><b>Stack</b> · Python / Pandas / MySQL / Selenium / API Integration</div>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- ============ SIDE PROJECT ============ -->
+  <section class="reveal">
+    <div class="eyebrow">side project</div>
+    <div class="project-list">
+      <a class="project" href="https://github.com/YashengChen/crawler_pytoolkit" target="_blank" rel="noopener">
+        <div class="project-head">
+          <h3>crawler_pytoolkit</h3>
+          <svg class="arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8"/></svg>
+        </div>
+        <p>整合多種爬蟲開發工具，包含 <code>OutputController</code>（SQL / NoSQL / File 統一輸出）、Selenium 封裝與 Mailserver 寄件模組等常用元件。</p>
+      </a>
+      <a class="project" href="https://github.com/YashengChen/rental_house_spider_example" target="_blank" rel="noopener">
+        <div class="project-head">
+          <h3>rental_house_spider_example</h3>
+          <svg class="arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8"/></svg>
+        </div>
+        <p>爬蟲展示專案，示範 Session 管理、Retry 重試機制、瀏覽器偽裝與 <code>pydantic</code> 資料驗證等實務範例。</p>
+      </a>
+    </div>
+  </section>
+
+  <!-- ============ EDUCATION ============ -->
+  <section class="reveal">
+    <div class="eyebrow">education</div>
+    <div class="edu-item">
+      <div>
+        <h3>資策會 · AI Big Data Analysis</h3>
+        <div class="sub">AI Big Data 大數據班 第 30 期</div>
+      </div>
+      <span class="when">2019.04 – 2019.09</span>
+    </div>
+    <div class="edu-item">
+      <div>
+        <h3>醒吾科技大學 · Hsing Wu University</h3>
+        <div class="sub">旅運管理系 · Department of Travel Management</div>
+      </div>
+      <span class="when">2009.09 – 2014.06</span>
+    </div>
+  </section>
+
+  <footer>
+    <span>© 2026 Ya-Sheng Chen</span>
+    <span>Built for the web · Print-ready</span>
+  </footer>
+
+</main>
+
+<script>
+  // ---- theme ----
+  const root = document.documentElement;
+  const toggle = document.getElementById('themeToggle');
+  let stored = null;
+  try { stored = localStorage.getItem('theme'); } catch(e){}
+  const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+  root.setAttribute('data-theme', stored || (prefersDark ? 'dark' : 'light'));
+
+  toggle.addEventListener('click', ()=>{
+    const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    root.setAttribute('data-theme', next);
+    try { localStorage.setItem('theme', next); } catch(e){}
+  });
+
+  // ---- scroll reveal ----
+  const items = document.querySelectorAll('.reveal');
+  if('IntersectionObserver' in window && !window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+    const io = new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }});
+    },{threshold:.12});
+    items.forEach((el,i)=>{ el.style.transitionDelay=(i*60)+'ms'; io.observe(el); });
+  } else {
+    items.forEach(el=>el.classList.add('in'));
+  }
+</script>
+</body>
+</html>
