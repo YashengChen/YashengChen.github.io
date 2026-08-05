@@ -537,49 +537,48 @@
 
       <article class="job current">
         <div class="job-head">
-          <h3>爬蟲工程師 · Python Engineer</h3>
+          <h3>Python Engineer / Data Engineer</h3>
           <span class="when"><span class="badge-now">2025.05 – Present</span></span>
         </div>
         <div class="company">緯致科技 WITS</div>
-        <p class="lead">獨立負責另類數據（Alternative Data）自動化蒐集管線的開發、單元測試與維運，涵蓋 50+ 政府與市場資料來源、60+
-          條獨立資料流，整合金融市場公告、企業法遵風險、不動產鑑價與宏觀經濟等異質資料，各資料流具獨立 schema 與清洗邏輯，為金融數據分析團隊提供穩定、低延遲的決策資料來源。</p>
+        <p class="lead">獨立負責金融產業客戶另類數據（Alternative Data）自動化蒐集平台之開發、測試與維運，管理 60+ 個政府與市場資料來源、20 個爬蟲服務模組、60+ 條資料流程，
+          涵蓋企業法遵風險、資本市場、ESG、不動產鑑價、智財與總體經濟等領域，支援 HTML／JSON／CSV／XLS／SHP／ZIP 及影音等多種格式；每日自動化處理 1～2 萬筆，單次批次最高達 10 萬筆。
+          開發完成後於客戶端測試環境驗證，交付客戶工程團隊經 Code Review 與 PR 流程上版，並掛載於客戶端排程平台自動執行。
+        </p>
 
         <div class="subgroup">
-          <div class="subgroup-label">Anti-bot &amp; Reverse Engineering</div>
+          <div class="subgroup-label">資料存取與穩定性優化</div>
           <ul>
-            <li>建立 requests → cloudscraper → curl_cffi 的分層請求策略，依防護強度逐級升級，兼顧蒐集效能與資源成本。</li>
-            <li>實價登錄：payload 與 response 皆經加密，透過 JavaScript 逆向工程解出金鑰、重現加解密函式還原資料。</li>
-            <li>findbiz、TWNIC IPv4：對方反爬機制升級為 Cloudflare（findbiz 原為 reCAPTCHA v3）後，改用 curl_cffi 進行 TLS/JA3 指紋模擬通過驗證。</li>
-            <li>MOPS 公開資訊觀測站：改用 curl_cffi 優化請求特徵，將 response 時間由 10+ 秒縮短至 1 秒內。</li>
+            <li>大幅提升蒐集效率：優化資料來源的請求流程與連線特徵，將平均回應時間由 10 秒以上縮短至 1 秒內，顯著改善整體資料流程執行效率。</li>
+            <li>建立分層請求策略：依各來源防護強度自動升級存取方式（requests → cloudscraper → curl_cffi），在穩定性與資源成本間取得平衡；面對來源端反爬機制升級（如 reCAPTCHA v3 改為
+              Cloudflare Bot Protection），以 TLS/JA3 指紋模擬快速調整並維持資料流程不中斷。</li>
+            <li>還原受保護的資料來源：分析前端 JavaScript 加解密邏輯，重現請求參數與回傳資料的加解密流程；解析影音平台的 signature／JWT 驗證機制，成功將原需人工操作的來源納入自動化流程。</li>
           </ul>
         </div>
 
         <div class="subgroup">
           <div class="subgroup-label">異質資料整合與清洗 · ETL</div>
           <ul>
-            <li>Schema Mapping：針對 API 回傳欄位無規則或縮寫的問題，建立動態欄位映射字典，對齊前端名稱與資料庫結構。</li>
-            <li>唯一性設計：以 data_id、category_id、company_id、year 等多欄位組成複合鍵，經 SHA-256 雜湊產生唯一識別碼，並於資料庫建立唯一索引擋重，避免重複資料入庫。</li>
-            <li>資料正規化：開發 Regex 模組，統一將多資料源混用的民國年 / 西元年轉換為 ISO 8601 標準格式。</li>
+            <li>確保資料不重複、可安全重跑：以多欄位複合鍵搭配 SHA-256 產生唯一識別碼並建立唯一索引，使 Pipeline 具備冪等性（Idempotency），重複執行不會產生髒資料。</li>
+            <li>降低異質資料整合成本：開發動態欄位映射機制，自動對應各來源無規則或縮寫的欄位命名；並建立正規化模組，將混用的民國／西元日期統一為 ISO 8601 標準格式。</li>
+            <li>建立資料品質防線：以 Pydantic Schema Validation 實施強型別檢查與欄位約束，在資料入庫前攔截缺漏、格式錯誤與異常值，確保 60+ 條資料流的 schema 一致性。</li>
+            </ul>
+            </div>
+            
+            <div class="subgroup">
+              <div class="subgroup-label">雲端資料儲存 · Cloud Data Warehouse</div>
+              <ul>
+                <li>整合物件儲存與資料倉儲服務承接資料落地與查詢需求，主檔資料設計去重機制、明細資料採 Append 模式保留完整歷史，支援後續分析。</li>
           </ul>
         </div>
 
-        <div class="subgroup">
-          <div class="subgroup-label">Alternative Data 管線</div>
-          <p class="lead" style="margin-bottom:9px">獨立開發並維護涵蓋 <b>50+ 個政府與市場資料來源、60+ 條獨立資料流 (data pipeline)</b> 的另類數據蒐集系統，各資料流具獨立 schema 與清洗邏輯：</p>
-          <ul>
-            <li><b>企業營運與風險</b>：商工登記、判決書資料庫、政府採購拒絕往來名單、進出口廠商登記、動產擔保交易、產業獎項與科學園區廠商名錄、104 公司與職缺資訊、村里界圖（結合實價登錄評估廠址地段價值）。</li>
-            <li><b>資本市場與 ESG</b>：證交所與公開資訊觀測站（財報、月營收、董監持股、四類債券、重訊、法說會影音、股東會電子資料、ESG 報告）。</li>
-            <li><b>不動產與總體經濟</b>：內政部實價登錄、全國稅籍資料、主計總處薪情平台。</li>
-            <li><b>智財與數位足跡</b>：TIPO 專利檢索 API、GeoLite IP、TWNIC IPv4 核發資訊、台灣公司情報網。</li>
-          </ul>
-        </div>
-
-        <div class="stack"><b>Stack</b> · Python / requests / cloudscraper / curl_cffi / BigQuery / Google Cloud Storage / SHA-256 / Regex / Claude</div>
+        <div class="stack"><b>Stack</b> · Python / Requests / curl_cffi / cloudscraper / Pydantic / Git / Google Cloud
+          Platform（BigQuery、Cloud Storage）</div>
       </article>
 
       <article class="job">
         <div class="job-head">
-          <h3>爬蟲工程師 · Python Engineer</h3>
+          <h3>Python工程師 · Python Engineer</h3>
           <span class="when">2022.04 – 2025.05 · 3 yr 1 mo</span>
         </div>
         <div class="company">坤侑科技股份有限公司</div>
