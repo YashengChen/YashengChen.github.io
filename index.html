@@ -4,13 +4,13 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>陳亞生 Ya-Sheng Chen · Python Data Engineer</title>
-<meta name="description" content="具 6+ 年 Python 資料工程與自動化開發經驗，專注於資料蒐集、ETL Pipeline、爬蟲系統與資料處理流程建置。">
+<meta name="description" content="具 6+ 年 Python 資料工程經驗，專注於 ETL Pipeline 設計、異質資料整合與資料品質治理；具備大規模資料採集與反爬蟲技術專長，能將難以取得的外部資料來源穩定納入自動化流程。曾參與社群媒體、新聞、金融與政府公開資料之自動化資料流程開發，具備大型資料蒐集與長期維運經驗。">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="canonical" href="https://yashengchen.github.io/">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="陳亞生 Ya-Sheng Chen">
 <meta property="og:title" content="陳亞生 Ya-Sheng Chen · Python Data Engineer">
-<meta property="og:description" content="具 6+ 年 Python 資料工程與自動化開發經驗，專注於資料蒐集、ETL Pipeline、爬蟲系統與資料處理流程建置。">
+<meta property="og:description" content="具 6+ 年 Python 資料工程經驗，專注於 ETL Pipeline 設計、異質資料整合與資料品質治理；具備大規模資料採集與反爬蟲技術專長，能將難以取得的外部資料來源穩定納入自動化流程。曾參與社群媒體、新聞、金融與政府公開資料之自動化資料流程開發，具備大型資料蒐集與長期維運經驗。">
 <meta property="og:url" content="https://yashengchen.github.io/">
 <meta property="og:locale" content="zh_TW">
 <meta name="theme-color" content="#F6F5F0" media="(prefers-color-scheme: light)">
@@ -364,7 +364,7 @@
   .stack b{color:var(--ink);font-weight:600}
 
   /* ---------- project ---------- */
-  .project-list{display:grid;gap:12px}
+  .project-list{display:grid;gap:22px}
   .project{
     background:var(--surface);
     border:1px solid var(--line);
@@ -373,15 +373,10 @@
     box-shadow:var(--shadow);
     transition:transform .2s ease, box-shadow .2s ease, background-color .3s ease, border-color .3s ease;
     display:block;
-    text-decoration:none;
   }
   .project:hover{transform:translateY(-2px);box-shadow:var(--shadow-hover)}
-  .project:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
-  .project-head{display:flex;align-items:center;gap:9px;margin-bottom:7px}
-  .project h3{font-family:var(--mono);font-size:15.5px;font-weight:600}
-  .project .arrow{color:var(--accent);transition:transform .2s ease;flex:none}
-  .project:hover .arrow{transform:translate(3px,-3px)}
-  .project p{font-size:14px;color:var(--muted);line-height:1.55}
+  .project h3{font-family:var(--mono);font-size:15.5px;font-weight:600;margin-bottom:9px}
+  .project p{font-size:14px;color:var(--muted);line-height:1.55;margin-bottom:14px}
   .project code{
     font-family:var(--mono);
     font-size:12.5px;
@@ -391,6 +386,19 @@
     padding:1px 6px;
     color:var(--ink);
   }
+  .project-link{
+    display:inline-flex;
+    align-items:center;
+    gap:7px;
+    font-family:var(--mono);
+    font-size:13px;
+    font-weight:600;
+    color:var(--accent);
+    text-decoration:none;
+  }
+  .project-link .arrow{transition:transform .2s ease;flex:none}
+  .project-link:hover .arrow{transform:translate(3px,-3px)}
+  .project-link:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:3px}
 
   /* ---------- education ---------- */
   .edu-item{
@@ -490,8 +498,8 @@
   <!-- ============ ABOUT ============ -->
   <section class="about reveal">
     <div class="eyebrow">about</div>
-    <p> 具 6+ 年 Python 資料工程與自動化開發經驗，專注於資料蒐集、ETL Pipeline、爬蟲系統與資料處理流程建置。曾參與社群媒體、新聞、金融與政府公開資料之自動化資料流程開發，並具備大型資料蒐集與長期維運經驗。</p>
-    <p>擅長快速分析與破解各類資料來源、建立穩定的自動化處理流程，並將混亂的既有系統重構為清晰、可維護的架構。熟悉 Airflow、Scrapy、Docker 與 Linux 環境，能協助團隊建構可持續運作的資料基礎設施。</p>
+    <p>具 6+ 年 Python 資料工程經驗，專注於 ETL Pipeline 設計、異質資料整合與資料品質治理；具備大規模資料採集與反爬蟲技術專長，能將難以取得的外部資料來源穩定納入自動化流程。曾參與社群媒體、新聞、金融與政府公開資料之自動化資料流程開發，具備大型資料蒐集與長期維運經驗。</p>
+    <p>擅長快速分析與解析各類資料來源、建立穩定的自動化處理流程，並將混亂的既有系統重構為清晰、可維護的架構。熟悉 Airflow、Scrapy、Docker 與 Linux 環境，能協助團隊建構可持續運作的資料基礎設施。</p>
     <p>2019 年自資策會 AI 大數據班轉職投入資料工程領域，至今持續深耕。</p>
   </section>
 
@@ -578,15 +586,16 @@
 
       <article class="job">
         <div class="job-head">
-          <h3>Python工程師 · Python Engineer</h3>
+          <h3>Python Engineer / Data Engineer</h3>
           <span class="when">2022.04 – 2025.05 · 3 yr 1 mo</span>
         </div>
         <div class="company">坤侑科技股份有限公司</div>
         <ul>
-          <li>負責各類資料蒐集、ETL Pipeline 與資料處理流程開發，支援社群媒體、新聞、金融與公開資料等多個商業專案之資料需求。</li>
-          <li>建立與維護多個自動化資料蒐集流程，並以 Airflow 建置資料 Pipeline 與排程流程。</li>
-          <li>透過 GUI Workflow 降低資料流程維護門檻，協助後端團隊快速整合外部資料來源。</li>
-          <li>參與輿情分析、情報蒐集與資料處理相關專案，建立資料清洗與轉換流程，提高資料可用性與穩定性。</li>
+          <li>建置 Airflow 資料排程系統：採用 Dynamic DAG 動態生成機制，依新聞來源自動產生 20+ 個獨立 DAG，避免重複維護相似流程並降低擴充成本；另針對社群平台建置資料蒐集與帳號維護雙軌排程，處理任務依賴、失敗重試與異常處理。</li>
+          <li>開發 GUI Workflow 維運介面：將資料流程設定介面化，使非工程人員亦可調整參數與監控執行狀態，降低團隊維護門檻與人力成本。</li>
+          <li>建置 MongoDB 資料儲存結構：依專案需求設計文件 schema 與索引，支援大量非結構化資料之寫入與查詢。</li>
+          <li>支援多領域商業專案資料需求：負責各類資料蒐集、ETL Pipeline 與資料處理流程開發，涵蓋社群媒體、新聞、金融與公開資料；建立資料清洗與轉換流程，並協助後端團隊快速整合外部資料來源。</li>
+          <li>參與輿情分析與情報蒐集專案，提供穩定的資料供應與處理流程。</li>
         </ul>
         <div class="stack"><b>Stack</b> · Python / Airflow / Scrapy / Selenium / Docker / MySQL / MongoDB</div>
       </article>
@@ -601,6 +610,7 @@
           <li>負責資料蒐集、自動化流程、資料處理與 API 資料整合，參與 SaaS 平台與金融資料產品開發。</li>
           <li>參與 SaaS 平台 0 → 1 資料流程建置，與 CEO、業務及演算法工程師共同討論產品需求。</li>
           <li>開發金融行情與公司財報相關資料流程，協助建立會員篩選與策略資料系統。</li>
+          <li>獨立設計資料庫結構：負責 SaaS 平台與金融資料產品之資料表結構設計與正規化，建立索引與關聯設計，支援會員篩選與策略資料系統之查詢需求。</li>
           <li>獨立開發中國電子發票自動登錄工具。</li>
         </ul>
         <div class="stat">
@@ -617,20 +627,22 @@
   <section class="reveal">
     <div class="eyebrow">side project</div>
     <div class="project-list">
-      <a class="project" href="https://github.com/YashengChen/crawler_pytoolkit" target="_blank" rel="noopener">
-        <div class="project-head">
-          <h3>crawler_pytoolkit</h3>
-          <svg class="arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8"/></svg>
-        </div>
+      <div class="project">
+        <h3>crawler_pytoolkit</h3>
         <p>整合多種爬蟲開發工具，包含 <code>OutputController</code>（SQL / NoSQL / File 統一輸出）、Selenium 封裝與 Mailserver 寄件模組等常用元件。</p>
-      </a>
-      <a class="project" href="https://github.com/YashengChen/rental_house_spider_example" target="_blank" rel="noopener">
-        <div class="project-head">
-          <h3>rental_house_spider_example</h3>
+        <a class="project-link" href="https://github.com/YashengChen/crawler_pytoolkit" target="_blank" rel="noopener">
+          查看程式碼
           <svg class="arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8"/></svg>
-        </div>
+        </a>
+      </div>
+      <div class="project">
+        <h3>rental_house_spider_example</h3>
         <p>爬蟲展示專案，示範 Session 管理、Retry 重試機制、瀏覽器偽裝與 <code>pydantic</code> 資料驗證等實務範例。</p>
-      </a>
+        <a class="project-link" href="https://github.com/YashengChen/rental_house_spider_example" target="_blank" rel="noopener">
+          查看程式碼
+          <svg class="arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8"/></svg>
+        </a>
+      </div>
     </div>
   </section>
 
